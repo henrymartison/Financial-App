@@ -1,20 +1,25 @@
-import React from 'react';
+import React from "react";
 import {
   createAppContainer,
   createSwitchNavigator,
   createStackNavigator
-} from 'react-navigation';
+} from "react-navigation";
 
-import MainTabNavigator from './MainTabNavigator';
-import SignIn from '../screens/Auth/SignIn';
+import MainTabNavigator from "./MainTabNavigator";
+
+import SignIn from "../screens/Auth/SignIn";
+import MainAuth from "../screens/Auth";
+import SignUp from "../screens/Auth/SignUp";
 
 const AuthStack = createStackNavigator(
   {
-    SignIn: SignIn
+    MainIndex: MainAuth,
+    SignIn: SignIn,
+    SignUp: SignUp
   },
   {
     defaultNavigationOptions: {
-      header: null
+      headerStyle: { borderBottomColor: "white" }
     }
   }
 );
