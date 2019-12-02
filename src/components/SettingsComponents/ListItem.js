@@ -11,6 +11,7 @@ const ListItem = ({
   iconLeft,
   iconRight = "ios-arrow-forward",
   attribute,
+  disabled = false,
   subText,
   subTextReq = false,
   onPress,
@@ -21,6 +22,7 @@ const ListItem = ({
   return (
     <View>
       <TouchableOpacity
+        activeOpacity={disabled ? 10 : 0.65}
         onPress={onPress}
         style={{
           paddingHorizontal: ph,

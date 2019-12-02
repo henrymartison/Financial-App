@@ -4,7 +4,7 @@ import { TouchableOpacity } from "./TouchableOpacity";
 import { Feather } from "@expo/vector-icons";
 import Colors from "../../constants/Colors";
 
-const CustomHeader = props => (
+const CustomHeader = ({ onPress }) => (
   <View style={styles.container}>
     <View style={{}}>
       <View style={{ flexDirection: "row", alignItems: "center" }}>
@@ -15,7 +15,7 @@ const CustomHeader = props => (
             <Text stlye={{ fontSize: 14 }}>00</Text>
           </Text>
         </View>
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity onPress={onPress} style={styles.button}>
           <Text style={{ color: "white", fontWeight: "600" }}>Add Money</Text>
         </TouchableOpacity>
       </View>
@@ -31,7 +31,7 @@ const CustomHeader = props => (
       </Text>
     </View>
     <TouchableOpacity>
-      <Feather name='bell' color='grey' size={24} />
+      <Feather name="bell" color="grey" size={24} />
     </TouchableOpacity>
   </View>
 );

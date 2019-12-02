@@ -1,42 +1,88 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet, TextInput } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TextInput,
+  TouchableWithoutFeedback,
+  Keyboard
+} from "react-native";
 import { TouchableOpacity } from "../../../../components/commons/TouchableOpacity";
 import Colors from "../../../../constants/Colors";
 import { fsr } from "../../../../components/commons/metrics";
 
 class ChangePass extends Component {
   static navigationOptions = { title: "Change Password" };
+
+  state = {
+    currPassword: "",
+    newPass: "",
+    confirmPass: ""
+  };
+
+  handleChangePass = () => {
+    const { newPass, confirmPass } = this.state;
+    if (newPass !== confirmPass) {
+      alert("Confirmed password mismatch!");
+    } else {
+      alert("Password successfully updated");
+      this.props.navigation.goBack();
+    }
+    return;
+  };
   render() {
     return (
-      <View style={styles.container}>
-        <View style={styles.inputContainer}>
-          <TextInput
-            style={styles.textInput}
-            secureTextEntry
-            placeholder="Current Password"
-            ref={ref => {
-              this._currentPass = ref;
-            }}
-            onSubmitEditing={() => this._newPass && this._newPass.focus()}
-            returnKeyType="next"
-            enablesReturnKeyAutomatically
-            autoFocus
-          />
-          <TextInput
-            style={styles.textInput}
-            secureTextEntry
-            placeholder="New Password"
-            ref={ref => {
-              this._newPass = ref;
-            }}
-            onSubmitEditing={() => alert("Password Successfully changed")}
-            returnKeyType="go"
-          />
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View style={styles.container}>
+          <View style={styles.inputContainer}>
+            <TextInput
+              style={styles.textInput}
+              onChangeText={currPassword => this.setState({ currPassword })}
+              secureTextEntry
+              placeholder="Current Password"
+              ref={ref => {
+                this._currentPass = ref;
+              }}
+              onSubmitEditing={() => this._newPass && this._newPass.focus()}
+              returnKeyType="next"
+              enablesReturnKeyAutomatically
+              autoFocus
+            />
+            <TextInput
+              style={styles.textInput}
+              onChangeText={newPass => this.setState({ newPass })}
+              secureTextEntry
+              placeholder="New Password"
+              ref={ref => {
+                this._newPass = ref;
+              }}
+              onSubmitEditing={() =>
+                this._confirmPass && this._confirmPass.focus()
+              }
+              returnKeyType="next"
+              enablesReturnKeyAutomatically
+            />
+            <TextInput
+              style={styles.textInput}
+              onChangeText={confirmPass => this.setState({ confirmPass })}
+              secureTextEntry
+              placeholder="Confirm new password"
+              ref={ref => {
+                this._confirmPass = ref;
+              }}
+              onSubmitEditing={this.handleChangePass}
+              returnKeyType="go"
+              enablesReturnKeyAutomatically
+            />
+          </View>
+          <TouchableOpacity
+            onPress={this.handleChangePass}
+            style={styles.button}
+          >
+            <Text style={styles.buttonText}>Change Password</Text>
+          </TouchableOpacity>
         </View>
-        <TouchableOpacity style={styles.button}>
-          <Text style={styles.buttonText}>Change Password</Text>
-        </TouchableOpacity>
-      </View>
+      </TouchableWithoutFeedback>
     );
   }
 }

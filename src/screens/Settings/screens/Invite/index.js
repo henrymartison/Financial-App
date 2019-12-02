@@ -5,7 +5,8 @@ import {
   StyleSheet,
   FlatList,
   ActivityIndicator,
-  ScrollView
+  ScrollView,
+  Dimensions
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { EvilIcons } from "@expo/vector-icons";
@@ -167,7 +168,7 @@ const styles = StyleSheet.create({
     flex: 1
   },
   topView: {
-    flex: 1,
+    height: Dimensions.get("window").height / 3,
     alignItems: "center",
     justifyContent: "flex-end",
     paddingVertical: 30

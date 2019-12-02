@@ -19,7 +19,11 @@ class Settings extends Component {
     return (
       <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
         <SafeAreaView />
-        <TouchableOpacity activeOpacity={0.88} style={styles.headerContainer}>
+        <TouchableOpacity
+          onPress={() => navigate("Profile")}
+          activeOpacity={0.88}
+          style={styles.headerContainer}
+        >
           <View style={styles.headerRow}>
             <View style={{}}>
               <Text style={{ fontWeight: "700", fontSize: fsr(3.5) }}>

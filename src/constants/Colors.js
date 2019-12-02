@@ -15,5 +15,6 @@ export default {
   darkCyan: "#118e93",
   darkBlue: "#47525e",
   PRIMARY: "tomato",
-  accent: "#51D8C7"
+  accent: "#51D8C7",
+  tabColor: "#222b37"
 };

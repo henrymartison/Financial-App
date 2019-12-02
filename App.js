@@ -32,6 +32,7 @@ export default function App(props) {
           translucent
           // backgroundColor="#e0e0e0"
           barStyle="dark-content"
+          translucent
         />
         {/* </View> */}
         <AppNavigator />

@@ -19,6 +19,7 @@ import BuyYourAirtime from "../../components/HomeComponents/BuyYourAirtime";
 import PayYourBills from "../../components/HomeComponents/PayYourBills";
 import { Header, Left, Body, Title, Right, Content } from "native-base";
 import Form from "../../components/HomeComponents/Form";
+import AddMoneyModal from "../../components/modals/AddMoneyModal";
 
 class Home extends Component {
   static navigationOptions = {
@@ -30,13 +31,20 @@ class Home extends Component {
     this.state = {
       users: [],
       isLoading: true,
-      modalVisible: false
+      modalVisible: false,
+      isVisible: false
     };
   }
 
   toggleModal(visible) {
     this.setState({ modalVisible: visible });
   }
+
+  actionFilter = () => {
+    this.setState(({ isVisible }) => {
+      return { isVisible: !isVisible };
+    });
+  };
 
   async componentDidMount() {
     this.setState({ isLoading: true });
@@ -70,13 +78,14 @@ class Home extends Component {
 
   render() {
     const { navigation } = this.props;
+    const { isVisible } = this.state;
 
     const { isLoading } = this.state;
     if (!isLoading) {
       return (
         <View style={styles.container}>
           <SafeAreaView />
-          <CustomHeader />
+          <CustomHeader onPress={this.actionFilter} />
           <ScrollView showsVerticalScrollIndicator={false}>
             <View
               style={{
@@ -209,6 +218,11 @@ class Home extends Component {
               <PayYourBills />
             </View>
           </ScrollView>
+          <AddMoneyModal
+            isVisible={isVisible}
+            actionFilter={this.actionFilter}
+            style={styles.bottomModal}
+          />
         </View>
       );
     } else {
@@ -292,5 +306,10 @@ const styles = StyleSheet.create({
     color: Colors.PRIMARY,
     fontSize: fsr(2.4),
     fontWeight: "600"
+  },
+  bottomModal: {
+    margin: 0
+    // height: "100%",
+    // width: "100%"
   }
 });

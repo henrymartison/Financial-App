@@ -5,7 +5,7 @@ import {
   createBottomTabNavigator,
   createMaterialTopTabNavigator
 } from "react-navigation";
-import { Ionicons } from "@expo/vector-icons";
+import { Ionicons, FontAwesome, FontAwesome5 } from "@expo/vector-icons";
 import { TabBar } from "react-native-animated-nav-tab-bar";
 
 import Colors from "../constants/Colors";
@@ -26,6 +26,8 @@ import Payments from "../screens/Settings/screens/Payments";
 import ChangePass from "../screens/Settings/screens/Password/ChangePass";
 import Password from "../screens/Settings/screens/Password";
 import Invite from "../screens/Settings/screens/Invite";
+import Profile from "../screens/Settings/screens/Profile";
+import EditProfile from "../screens/Settings/screens/Profile/EditProfile";
 
 const config = Platform.select({
   web: { headerMode: "screen" },
@@ -93,28 +95,34 @@ HomeStack.navigationOptions = ({ navigation }) => {
 
     tabBarLabel: "Overview",
     tabBarIcon: ({ tintColor, focused }) => (
-      <TabBarIcon name="trending-up" focused={focused} tintColor={tintColor} />
+      <FontAwesome5 name="igloo" size={18} color={tintColor} />
     )
   };
 };
 
 HomeStack.path = "";
 
-const CardsStack = createStackNavigator(
+const NotificationStack = createStackNavigator(
   {
     Cards: Cards
   },
   config
 );
 
-CardsStack.navigationOptions = {
-  tabBarLabel: "Cards",
-  tabBarIcon: ({ focused, tintColor }) => (
-    <TabBarIcon focused={focused} name={"credit-card"} tintColor={tintColor} />
-  )
+NotificationStack.navigationOptions = {
+  tabBarLabel: "Notifications",
+  tabBarIcon: ({ focused, tintColor }) => {
+    if (focused) {
+      return <FontAwesome name="bell" size={18} color={tintColor} />;
+    } else {
+      return (
+        <TabBarIcon focused={focused} tintColor={tintColor} name={"bell"} />
+      );
+    }
+  }
 };
 
-CardsStack.path = "";
+NotificationStack.path = "";
 
 const SettingsStack = createStackNavigator(
   {
@@ -123,7 +131,9 @@ const SettingsStack = createStackNavigator(
     ChPasswd: ChangePass,
     Payments: Payments,
     Support: Support,
-    Invite: Invite
+    Invite: Invite,
+    Profile: Profile,
+    EditProfile: EditProfile
   },
   {
     defaultNavigationOptions: ({ navigation }) => ({
@@ -142,11 +152,19 @@ const SettingsStack = createStackNavigator(
   config
 );
 
-SettingsStack.navigationOptions = {
-  tabBarLabel: "Settings",
-  tabBarIcon: ({ focused, tintColor }) => (
-    <TabBarIcon focused={focused} tintColor={tintColor} name={"settings"} />
-  )
+SettingsStack.navigationOptions = ({ navigation }) => {
+  let tabBarVisible = true;
+
+  if (navigation.state.index > 0) {
+    tabBarVisible = false;
+  }
+  return {
+    tabBarVisible,
+    tabBarLabel: "Settings",
+    tabBarIcon: ({ focused, tintColor }) => (
+      <TabBarIcon focused={focused} tintColor={tintColor} name={"settings"} />
+    )
+  };
 };
 
 SettingsStack.path = "";
@@ -156,32 +174,33 @@ const TransactionsStack = createStackNavigator({
 });
 
 TransactionsStack.navigationOptions = {
-  tabBarLabel: "Notifications",
+  tabBarLabel: "Activiy",
   tabBarIcon: ({ focused, tintColor }) => (
-    <TabBarIcon focused={focused} tintColor={tintColor} name={"bell"} />
+    <TabBarIcon focused={focused} tintColor={tintColor} name="activity" />
   )
 };
 
 const tabNavigator = createBottomTabNavigator(
   {
-    SettingsStack,
     HomeStack,
-    // CardsStack,
-    TransactionsStack
+    TransactionsStack,
+    NotificationStack,
+    SettingsStack
   },
   {
     tabBarOptions: {
-      tabStyle: { backgroundColor: "#e0e0e0" },
-      labelStyle: { fontSize: 12 }
-      // activeTintColor: 'tomato'
-    },
-    tabBarComponent: props => (
-      <TabBar
-        activeColors={["#e6b580", "#8e87d6", "#c095c9", "tomato"]} // or activeColors={'#e6b580'}
-        activeTabBackgrounds={["#ede7e6", "#eae3f6", "#eae4f6"]} // or activeTabBackgrounds={'#ede7e6'}
-        {...props}
-      />
-    )
+      tabStyle: { backgroundColor: Colors.tabColor },
+      labelStyle: { fontSize: 12 },
+      activeTintColor: "white",
+      inactiveTintColor: "#525964"
+    }
+    // tabBarComponent: props => (
+    //   <TabBar
+    //     activeColors={["#e6b580", "#8e87d6", "#c095c9", "tomato"]} // or activeColors={'#e6b580'}
+    //     activeTabBackgrounds={["#ede7e6", "#eae3f6", "#eae4f6"]} // or activeTabBackgrounds={'#ede7e6'}
+    //     {...props}
+    //   />
+    // )
   }
 );
 
